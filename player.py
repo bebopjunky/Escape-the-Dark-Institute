@@ -4,7 +4,8 @@ import random
 class player():
 
     def __init__(self,name):
-        self.name = None
+        self.name = name
+        self.title = None
         self.dice = []
         self.health = 12
         self.mod_att = None
@@ -19,7 +20,7 @@ class player():
         stats = ["m","c","w"]
         ranks = ["Boss","Worker","Drone","Engineer","Spider","Monkey","Clown","Human","Dog"]
         self.dice = random.choices(stats, weights = [1, 1, 1], k = 6)
-        self.name = name + " The " + random.choice(ranks)
+        self.title = name + " The " + random.choice(ranks)
         
     
     def set_mod(self):
@@ -36,7 +37,7 @@ class player():
     def get_description(self):
         print("")
         print("*****************************************")
-        print(self.name)
+        print(self.title)
         print("Health: ",self.health)
         print("Might",self.dice.count("m"))
         print("Cunning",self.dice.count("c"))
