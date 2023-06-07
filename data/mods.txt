@@ -1,0 +1,4 @@
+head,w
+shoulders,w 
+knees,c
+toes,m
