@@ -7,15 +7,16 @@ from items import item
 
 def validate(command,action):
     if action == "player":
-        for player in players:
+        for player in chapter:                        
             if command == player.get_name():
                 return(command)
                 break
-            else:
-                print("Invalid Choice")
-                return(False)
+               
+        
+        
 
 #Player Setup
+actions = ["roll ranged","roll melee","trade","heal","flank"]
 print("Escape The Dark Institution")
 print("How many players will try and escape?")
 player_count = int(input(": "))
@@ -27,6 +28,7 @@ for i in range(0,player_count):
     print("Player",i+1)
     print("Name your character")
     choice = input(": ")
+    
     players[i] = player(choice)
     players[i].get_description()    
 
@@ -40,21 +42,45 @@ item_deck = [None]*10
 for i in range(0,len(item_deck)):
     item_deck[i] = item()
 
+
+
+#Main Game
+
+#Moves through each card in the deck
 for card in room_deck:
     card.get_room_description()
     chapter = players.copy()
     ranged_combat = True
-
-    while len(card.get_room_health())>0:
-        
+#Runs until the card is beat
+    while len(card.get_room_health())>0:        
+#Player Selection        
         print("Who will take an action?")
-        player = validate(input(": "),"player")
-        
-        if player != False:
+        player_character = validate(input(": "),"player")        
+        if player_character != False:
             if ranged_combat == True:
                 print("Will you engage in ranged combat?")
 
 
 
+
+
+
+
+
+            if len(chapter) == 0:
+                chapter = players.copy()
+            else:
+                for tmp in chapter:
+                    tmp_name = tmp.get_name()
+                    if tmp_name == player_character:
+                        chapter.remove(tmp)
+                        break   
+
+                
+
+
+
+
+#set current player
 
         
