@@ -7,13 +7,32 @@ from items import item
 
 def validate(command,action):
     if action == "player":
-        for player in chapter:                        
-            if command == player.get_name():
-                return(command)
-                break
-               
-        
-        
+        for a in chapter:
+            if command == a.get_name():
+                return command
+        return False
+
+
+def roll_ranged(current_player):
+    #Ranged Combat
+    print("")
+    print("*****************************************")
+    print("You are carrying: ")
+    print()
+    pass
+
+def roll_melee(current_player):
+    pass
+
+def trade(current_player):
+    pass
+    
+def heal(current_player):
+    pass
+
+def flank(current_player):
+    pass
+
 
 #Player Setup
 actions = ["roll ranged","roll melee","trade","heal","flank"]
@@ -28,22 +47,19 @@ for i in range(0,player_count):
     print("Player",i+1)
     print("Name your character")
     choice = input(": ")
-    
     players[i] = player(choice)
-    players[i].get_description()    
-
+    players[i].get_description()
 #Room Setup
 room_deck = [None]*2
 for i in range(0,len(room_deck)):
     room_deck[i] = room(player_count)
-
 #Item Setup
 item_deck = [None]*10
 for i in range(0,len(item_deck)):
     item_deck[i] = item()
-
-
-
+for tmp in players:
+    #THIS IS WHERE I AM
+    tmp.set_inventory(random.choice(item_deck))
 #Main Game
 
 #Moves through each card in the deck
@@ -52,35 +68,27 @@ for card in room_deck:
     chapter = players.copy()
     ranged_combat = True
 #Runs until the card is beat
-    while len(card.get_room_health())>0:        
-#Player Selection        
+    while len(card.get_room_health())>0:
+#Player Selection
+        if len(chapter) == 0:
+            chapter = players.copy()
+        print("")
         print("Who will take an action?")
-        player_character = validate(input(": "),"player")        
-        if player_character != False:
-            if ranged_combat == True:
-                print("Will you engage in ranged combat?")
-
-
-
-
-
-
-
-
-            if len(chapter) == 0:
-                chapter = players.copy()
-            else:
-                for tmp in chapter:
-                    tmp_name = tmp.get_name()
-                    if tmp_name == player_character:
-                        chapter.remove(tmp)
-                        break   
-
-                
-
-
-
-
+        choice = validate(input(": "),"player")
+        if choice is not False:
+            for tmp in chapter:
+                tmp_name = tmp.get_name()
+                if tmp_name == choice:
+                    current_player = tmp
+            if ranged_combat is True:
+                print("Will you engage in ranged combat? y/n")
+                choice = input(": ")
+                if choice == "y":
+                    roll_ranged(current_player)
+     
+                chapter.remove(current_player)                
+        else:
+            print("*****************************************")
+            print("Invalid Choice")
+            print("*****************************************")
 #set current player
-
-        

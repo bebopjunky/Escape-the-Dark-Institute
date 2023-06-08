@@ -21,3 +21,16 @@ class item():
         self.item_weight = item[2].strip()
         self.item_type = item[3].strip()
         self.item_ammo = item[4].strip()
+    
+    def get_description(self):
+        print("*****************************************")
+        print("Item Name: ",self.item_name)
+        print(self.item_desc)
+        print("Size",self.item_weight)
+        if self.item_type == "b":
+            print("It fires ballistic ammo and contains ",self.item_ammo," shots")
+        if self.item_type == "e":
+            print("It fires energy ammo and contains ",self.item_ammo," shots")
+        else:
+            print("It fires explosive ammo and contains ",self.item_ammo," shots")
+        print("*****************************************")
