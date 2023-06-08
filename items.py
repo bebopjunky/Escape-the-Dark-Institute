@@ -11,6 +11,9 @@ class item():
 
         self.setup()
 
+    def __str__(self):
+        return f"{self.item_name}"
+    
     def setup(self):
         tmp = random.choice(items)
         items.remove(tmp)
