@@ -15,8 +15,8 @@ class room():
         self.room_explosive = None
 
         self.setup(player_count)
-    def __str__(self):
-        return f"{self.room_name}"
+    # def __str__(self):
+    #     return f"{self.room_name}"
 
     def setup(self,player_count):
         tmp = random.choice(rooms)

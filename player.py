@@ -12,8 +12,7 @@ class player():
         self.mod_att = None
         self.mod_desc = None
         self.inventory = []
-        self.inventory_weight = 0
-        
+        self.inventory_weight = 0        
         self.set_character(name)
         self.set_mod()
 
@@ -60,3 +59,8 @@ class player():
             self.inventory_weight=0
             for stuff in self.inventory:
                 self.inventory_weight = int(stuff.item_weight) + self.inventory_weight
+    def get_ammo():
+        for weapon in self.inventory:
+            if weapon.item_ammo > 0:
+                return (weapon)
+            

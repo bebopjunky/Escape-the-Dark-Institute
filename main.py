@@ -5,31 +5,50 @@ from items import item
 
 #validate input
 
-def validate(command,action):
+def validate(current_player,action):
+    actions = ["roll ranged","roll melee","trade","heal","flank","stats"]
     if action == "player":
         for a in chapter:
-            if command == a.get_name():
-                return command
+            if current_player == a.get_name():
+                return current_player
+        print("*****************************************")
+        print("Invalid Choice")
+        print("*****************************************")
         return False
-
-
+    elif action == "stats":
+        current_player.get_description()
+    elif action in actions:
+        print("")
+        if action == "help":
+            print("Available Actions")
+            print(actions)
+        elif action == "roll ranged":
+            roll_ranged(current_player)            
+        elif action == "roll melee":
+            roll_melee(current_player)
+        elif action == "trade":
+            trade(current_player)
+        elif action == "heal":
+            heal(current_player)
+        elif action == "flank":
+            flank(current_player)
+        return True
+    else:
+        print("")
+        print("Invalid Action")
+        print("")
+        return False
+#Actions
 def roll_ranged(current_player):
     #Ranged Combat
-    print("")
-    print("*****************************************")
-    print("You are carrying: ")
-    print()
-    pass
-
+    weapon = current_player.
+    if 
 def roll_melee(current_player):
     pass
-
 def trade(current_player):
-    pass
-    
+    pass   
 def heal(current_player):
     pass
-
 def flank(current_player):
     pass
 
@@ -39,39 +58,23 @@ for i in range(0,len(item_deck)):
     item_deck[i] = item()
 
 #Player Setup
-actions = ["roll ranged","roll melee","trade","heal","flank"]
 print("Escape The Dark Institution")
 print("How many players will try and escape?")
 player_count = int(input(": "))
-
 players = [None]*player_count
-
-# for i in range(0,player_count):
-#     print("")
-#     print("Player",i+1)
-#     print("Name your character")
-#     choice = input(": ")
-#     players[i] = player(choice)
-#     players[i].set_inventory(random.choice(item_deck))
-#     players[i].get_description()
-
-for tmp in players:
+for counter,tmp in enumerate(players):
     print("")
     print("Player",i+1)
     print("Name your character")
     choice = input(": ")
-    tmp = player(choice)
-    tmp.set_inventory(random.choice(item_deck))
-    tmp.get_description()
-
-# for tmp in players:    
-#     tmp.set_inventory(random.choice(item_deck))
-
+    players[counter] = player(choice)
+    players[counter].set_inventory(random.choice(item_deck))
+    players[counter].get_description()
 
 #Room Setup
 room_deck = [None]*2
-for tmp in room_deck:
-    tmp = room(player_count)
+for counter, tmp in enumerate(room_deck):
+    room_deck[counter] = room(player_count)
 
 #Main Game
 
@@ -86,6 +89,10 @@ for card in room_deck:
         if len(chapter) == 0:
             chapter = players.copy()
         print("")
+        print("Available Players: ")
+        for a in chapter:
+            print(a)
+        print("")
         print("Who will take an action?")
         choice = validate(input(": "),"player")
         if choice is not False:
@@ -93,14 +100,11 @@ for card in room_deck:
                 tmp_name = tmp.get_name()
                 if tmp_name == choice:
                     current_player = tmp
-            if ranged_combat is True:
-                print("Will you engage in ranged combat? y/n")
-                choice = input(": ")
-                if choice == "y":
-                    roll_ranged(current_player)
-                chapter.remove(current_player)                
-        else:
-            print("*****************************************")
-            print("Invalid Choice")
-            print("*****************************************")
-#set current player
+            valid = False
+            while valid is not True:
+                print("Available Actions")
+                print("roll ranged","roll melee","trade","heal","flank","stats")
+                print("")                   
+                print("What action will you take?")
+                valid = validate(current_player,input(": "))
+            chapter.remove(current_player)

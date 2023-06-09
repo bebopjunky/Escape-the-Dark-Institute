@@ -11,8 +11,8 @@ class item():
 
         self.setup()
 
-    def __str__(self):
-        return f"{self.item_name}"
+    # def __str__(self):
+    #     return f"{self.item_name}"
     
     def setup(self):
         tmp = random.choice(items)
@@ -31,9 +31,9 @@ class item():
         print(self.item_desc)
         print("Size",self.item_weight)
         if self.item_type == "b":
-            print("It fires ballistic ammo and contains ",self.item_ammo," shots")
+            print("It fires ballistic ammo and contains",self.item_ammo,"shots")
         if self.item_type == "e":
-            print("It fires energy ammo and contains ",self.item_ammo," shots")
+            print("It fires energy ammo and contains",self.item_ammo,"shots")
         else:
-            print("It fires explosive ammo and contains ",self.item_ammo," shots")
+            print("It fires explosive ammo and contains",self.item_ammo,"shots")
         print("*****************************************")
