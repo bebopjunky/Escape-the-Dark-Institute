@@ -56,3 +56,14 @@ class room():
 
     def get_room_health(self):
         return(self.room_health)
+    
+    def remove_room_health(self,roll,mod):        
+        if roll in self.room_health:
+            self.room_health.remove(roll)
+            if mod in self.room_health:
+                self.room_health.remove(mod)
+                print("Mod Activated!")            
+            print("Health:",self.room_health)
+        else:
+            print("A Miss!")
+#I AM WORKING HERE!

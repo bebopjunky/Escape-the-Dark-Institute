@@ -38,13 +38,40 @@ def validate(current_player,action):
         print("Invalid Action")
         print("")
         return False
+    
 #Actions
 def roll_ranged(current_player):
     #Ranged Combat
-    weapon = current_player.
-    if 
+    weapon = current_player.get_ammo()
+    if weapon is not False:        
+        ranged_dice = ["Hit","Hit","Miss"]
+        choices = ["c","m","w"]
+        valid = False
+        print("you are fighting with",weapon)
+        for i in range(0,int(weapon.item_ammo)): #tsk tsk lazy coding
+            roll = random.choice(ranged_dice)
+            print("You rolled a ",roll)
+            if roll == "Hit":
+                while valid is not True:
+                    print("How do you want to allocate the hit?")
+                    print(choices)
+                    choice = input()
+                    if choice in choices:
+                        valid = True
+                        card.remove_room_health(choice,current_player.get_mod())
+                    else:
+                        print("Invalid Choice")
+                
+
+                
+        
+#I AM WORKING HERE!
+
+                
 def roll_melee(current_player):
-    pass
+        roll = random.choice(current_player.dice)
+        print("You rolled a ",roll)
+
 def trade(current_player):
     pass   
 def heal(current_player):
@@ -103,7 +130,7 @@ for card in room_deck:
             valid = False
             while valid is not True:
                 print("Available Actions")
-                print("roll ranged","roll melee","trade","heal","flank","stats")
+                print("roll ranged","¦","roll melee","¦","trade","¦","heal","¦","flank","¦","stats")
                 print("")                   
                 print("What action will you take?")
                 valid = validate(current_player,input(": "))
