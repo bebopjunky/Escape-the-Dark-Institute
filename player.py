@@ -30,6 +30,8 @@ class player():
         mod = tmp.split(",")
         self.mod_desc = mod[0]
         self.mod_att = mod[1]
+    def get_mod(self):
+        return(self.mod_att)
     def c_roll(self):
         roll = random.choice(self.dice)
         return(roll)
@@ -59,8 +61,13 @@ class player():
             self.inventory_weight=0
             for stuff in self.inventory:
                 self.inventory_weight = int(stuff.item_weight) + self.inventory_weight
-    def get_ammo():
+    def get_ammo(self):
         for weapon in self.inventory:
-            if weapon.item_ammo > 0:
+            if int(weapon.item_ammo) > 0:
                 return (weapon)
+            else:
+                print("")
+                print("Out of ammo")
+                print("")
+                return False
             
