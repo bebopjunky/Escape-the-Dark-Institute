@@ -37,3 +37,9 @@ class item():
         else:
             print("It fires explosive ammo and contains",self.item_ammo,"shots")
         print("*****************************************")
+    
+    def get_ammo(self):
+        return (self.item_ammo)
+
+    def get_type(self):
+        return(self.item_type)

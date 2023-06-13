@@ -25,6 +25,8 @@ def validate(current_player,action):
         elif action == "roll ranged":
             roll_ranged(current_player)            
         elif action == "roll melee":
+            global ranged_combat
+            ranged_combat = False
             roll_melee(current_player)
         elif action == "trade":
             trade(current_player)
@@ -42,35 +44,43 @@ def validate(current_player,action):
 #Actions
 def roll_ranged(current_player):
     #Ranged Combat
-    weapon = current_player.get_ammo()
+    weapon = current_player.get_weapon()
     if weapon is not False:        
         ranged_dice = ["Hit","Hit","Miss"]
-        choices = ["c","m","w"]
-        valid = False
+        choices = ["c","m","w"]        
         print("you are fighting with",weapon)
-        for i in range(0,int(weapon.item_ammo)): #tsk tsk lazy coding
+        print("Ammo:",weapon.get_ammo())
+        for i in range(0,int(weapon.get_ammo())): 
+            valid = False
             roll = random.choice(ranged_dice)
             print("You rolled a ",roll)
             if roll == "Hit":
-                while valid is not True:
-                    print("How do you want to allocate the hit?")
-                    print(choices)
-                    choice = input()
-                    if choice in choices:
-                        valid = True
-                        card.remove_room_health(choice,current_player.get_mod())
-                    else:
-                        print("Invalid Choice")
-                
+                if weapon.get_type() == "b":
+                    ammo = card.get_room_bdamage()
+                elif card.get_room_edamage():
+                    ammo = card.get_room_edamage()
+                else:
+                    ammo = card.get_room_xdamage()
+                ####### ADD IN THE FOR LOOP BELOW!
+                for i in range (0,(int(ammo))):
+                    while valid is not True:
+                        print("How do you want to allocate the damage?")
+                        print(choices)
+                        choice = input()
+                        if choice in choices:
 
-                
-        
-#I AM WORKING HERE!
+                            valid = True
+                            card.remove_room_health(choice,current_player.get_mod())                        
+                            current_player.remove_health(int(card.get_room_rdamage()))
+                        else:
+                            print("Invalid Choice")        
 
                 
 def roll_melee(current_player):
         roll = random.choice(current_player.dice)
         print("You rolled a ",roll)
+        card.remove_room_health(roll,current_player.get_mod())
+        current_player.remove_health(int(card.get_room_rdamage()))
 
 def trade(current_player):
     pass   
@@ -135,3 +145,7 @@ for card in room_deck:
                 print("What action will you take?")
                 valid = validate(current_player,input(": "))
             chapter.remove(current_player)
+    print("")
+    print("ROOM COMPLETED")
+    print("")
+    

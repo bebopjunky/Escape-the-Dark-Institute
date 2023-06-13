@@ -53,6 +53,18 @@ class room():
         print("The room will take",self.room_explosive,"explosive damage")
         print("*****************************************")
         print("")
+    
+    def get_room_rdamage(self):
+        return (self.room_rdamage)
+    
+    def get_room_bdamage(self):
+        return (self.room_ballistic)
+    
+    def get_room_edamage(self):
+        return (self.room_energy)
+
+    def get_room_xdamage(self):
+        return (self.room_explosive)                     
 
     def get_room_health(self):
         return(self.room_health)
@@ -63,7 +75,6 @@ class room():
             if mod in self.room_health:
                 self.room_health.remove(mod)
                 print("Mod Activated!")            
-            print("Health:",self.room_health)
-        else:
-            print("A Miss!")
-#I AM WORKING HERE!
+            print("Room Health:",self.room_health)
+            
+        
