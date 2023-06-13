@@ -76,3 +76,8 @@ class player():
         self.health = self.health - damage
         print("Player Health:",self.health)
         print("")
+
+    def reload(self):
+        for weapon in self.inventory:
+            if int(weapon.item_ammo) == 0:
+                weapon.reload()

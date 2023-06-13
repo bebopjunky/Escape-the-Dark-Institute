@@ -6,7 +6,7 @@ from items import item
 #validate input
 
 def validate(current_player,action):
-    actions = ["roll ranged","roll melee","trade","heal","flank","stats"]
+    actions = ["roll ranged","reload","roll melee","trade","heal","flank","stats"]
     if action == "player":
         for a in chapter:
             if current_player == a.get_name():
@@ -37,7 +37,9 @@ def validate(current_player,action):
         return True
     else:
         print("")
+        print("*****************************************")
         print("Invalid Action")
+        print("*****************************************")
         print("")
         return False
     
@@ -53,6 +55,8 @@ def roll_ranged(current_player):
         for i in range(0,int(weapon.get_ammo())): 
             valid = False
             roll = random.choice(ranged_dice)
+            print("")
+            print("Your",+1,"roll")
             print("You rolled a ",roll)
             if roll == "Hit":
                 if weapon.get_type() == "b":
@@ -60,20 +64,19 @@ def roll_ranged(current_player):
                 elif card.get_room_edamage():
                     ammo = card.get_room_edamage()
                 else:
-                    ammo = card.get_room_xdamage()
-                ####### ADD IN THE FOR LOOP BELOW!
+                    ammo = card.get_room_xdamage()                
                 for i in range (0,(int(ammo))):
                     while valid is not True:
                         print("How do you want to allocate the damage?")
                         print(choices)
                         choice = input()
                         if choice in choices:
-
                             valid = True
                             card.remove_room_health(choice,current_player.get_mod())                        
                             current_player.remove_health(int(card.get_room_rdamage()))
                         else:
-                            print("Invalid Choice")        
+                            print("Invalid Choice") 
+                weapon.reduce_ammo()       
 
                 
 def roll_melee(current_player):
@@ -81,6 +84,10 @@ def roll_melee(current_player):
         print("You rolled a ",roll)
         card.remove_room_health(roll,current_player.get_mod())
         current_player.remove_health(int(card.get_room_rdamage()))
+
+def reload(current_player):
+    weapon = current_player.get_weapon()
+    weapon.reload()
 
 def trade(current_player):
     pass   
@@ -96,8 +103,14 @@ for i in range(0,len(item_deck)):
 
 #Player Setup
 print("Escape The Dark Institution")
-print("How many players will try and escape?")
-player_count = int(input(": "))
+#validation of player_count
+player_count = ""
+while not(isinstance(player_count,int)):
+    print("How many players will try and escape?")
+    player_count = input(": ")
+    if player_count.isdigit():
+        player_count = int(player_count)
+
 players = [None]*player_count
 for counter,tmp in enumerate(players):
     print("")
@@ -120,6 +133,8 @@ for card in room_deck:
     card.get_room_description()
     chapter = players.copy()
     ranged_combat = True
+    for character in chapter:
+        character.reload()
 #Runs until the card is beat
     while len(card.get_room_health())>0:
 #Player Selection
