@@ -61,7 +61,7 @@ class player():
             self.inventory_weight=0
             for stuff in self.inventory:
                 self.inventory_weight = int(stuff.item_weight) + self.inventory_weight
-    def get_ammo(self):
+    def get_weapon(self):
         for weapon in self.inventory:
             if int(weapon.item_ammo) > 0:
                 return (weapon)
@@ -71,3 +71,13 @@ class player():
                 print("")
                 return False
             
+    def remove_health(self,damage):
+        #damage = int(damage)
+        self.health = self.health - damage
+        print("Player Health:",self.health)
+        print("")
+
+    def reload(self):
+        for weapon in self.inventory:
+            if int(weapon.item_ammo) == 0:
+                weapon.reload()
