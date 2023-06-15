@@ -34,17 +34,22 @@ class item():
         print("Size",self.item_weight)
         if self.item_type == "b":
             print("It fires ballistic ammo and contains",self.item_ammo,"shots")
-        if self.item_type == "e":
+        elif self.item_type == "e":
             print("It fires energy ammo and contains",self.item_ammo,"shots")
         else:
             print("It fires explosive ammo and contains",self.item_ammo,"shots")
         print("*****************************************")
     
     def get_ammo(self):
-        return (self.item_ammo)
-
+        return(self.item_ammo)
+    
     def get_type(self):
-        return(self.item_type)
+        if self.item_type == "b":
+            return ("ballistic")
+        elif self.item_type == "e":
+            return ("energy")
+        else:
+            return ("explosive")      
     
     def reduce_ammo(self):
         self.item_ammo = 0
