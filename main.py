@@ -17,9 +17,7 @@ def validate(current_player,action):
         for a in chapter:
             if current_player == a.get_name():
                 return current_player
-        print("*****************************************")
-        print("Invalid Choice")
-        print("*****************************************")
+        invalid()
         return False
     elif action == "stats":
         current_player.get_description()
@@ -88,6 +86,8 @@ def roll_ranged(current_player):
                             card.remove_room_health(choice,current_player.get_mod())   
                         else:
                             print("Invalid Choice") 
+                        if len(card.get_room_health()) == 0:
+                            break
                     valid = False
         weapon.reduce_ammo()        
         current_player.remove_health(int(card.get_room_rdamage()))        
@@ -98,7 +98,7 @@ def roll_melee(current_player):
         roll = random.choice(current_player.dice)
         print("You rolled a ",roll)
         card.remove_room_health(roll,current_player.get_mod())
-        current_player.remove_health(int(card.get_room_rdamage()))
+        current_player.remove_health(int(card.get_room_cdamage()))
 def reload(current_player):
     weapon = current_player.get_weapon()
     weapon.reload()
@@ -106,19 +106,26 @@ def reload(current_player):
     print("*****************************************")
     print("ACTION: RELOAD")
 def trade(current_player):
+    tmp_list = players.copy()
+    tmp_list.remove(current_player)
     print("")
     print("*****************************************")
     print("ACTION: TRADE")
+    print("Available Players: ")
+    for tmp_player in tmp_list:
+        print(tmp_player)
     print("Which player do you want to trade with?")
     choice = input(": ")
-    tmp_list = players.copy()
-    tmp_list.remove(current_player)
+
     for trade_player in tmp_list:
         if choice == trade_player.get_name():
             current_player.get_inventory()
             trade_player.get_inventory() 
             print("Which item number do you want to trade: ")  
             choice = input(": ")
+            if choice == "x":
+                print("Cancel")
+                return()
             trade_item = current_player.get_item(int(choice)-1)
             if trade_item != False:
                 trade_player.set_inventory(trade_item)
@@ -128,6 +135,7 @@ def heal(current_player):
     print("")
     print("*****************************************")
     print("ACTION: HEAL")
+    current_player.heal()
 def flank(current_player):
     print("")
     print("*****************************************")
@@ -136,6 +144,9 @@ def drop(current_player):
     current_player.get_inventory()
     print("Which item should you drop?")
     choice = input(": ")
+    if choice == "x":
+                print("Cancel")
+                return()
     current_player.drop(int(choice)-1)
 
 #Item Setup
@@ -175,6 +186,8 @@ for card in room_deck:
     card.get_room_description()
     chapter = players.copy()
     ranged_combat = True
+    heal_avaiable = True
+    flank_available = True
     for character in chapter:
         character.reload()
 #Runs until the card is beat
@@ -205,4 +218,5 @@ for card in room_deck:
     print("")
     print("ROOM COMPLETED")
     print("")
+print("YOU WIN!")
     

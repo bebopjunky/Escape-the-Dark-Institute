@@ -111,3 +111,11 @@ class player():
         for weapon in self.inventory:
             if int(weapon.item_ammo) == 0:
                 weapon.reload()
+
+    def heal(self):
+        if self.health == 12:
+            print("You are at full health")
+        else:
+            self.health += 1
+            print("You have been healed")
+            print("Health: ",self.health)

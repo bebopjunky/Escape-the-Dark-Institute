@@ -75,6 +75,7 @@ class room():
             if mod in self.room_health:
                 self.room_health.remove(mod)
                 print("Mod Activated!")            
-            print("Room Health:",self.room_health)
+            print("Current Room Health:",self.room_health)
             
         
+#create sub classes for the different room types. 
