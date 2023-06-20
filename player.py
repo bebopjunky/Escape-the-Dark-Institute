@@ -51,6 +51,36 @@ class player():
             item.get_description()
         print("*****************************************")
         print("")
+    def get_inventory(self):
+        print("")
+        print("*****************************************")
+        print(self.title)
+        print("Available Space ",self.inventory_weight)
+        print("You are Carrying: ")
+        if len(self.inventory) == 0:
+            print("NOTHING")
+        else: 
+            for counter, item in enumerate(self.inventory):
+                print("Item number: ",counter+1)
+                item.get_description()
+        print("*****************************************")
+        print("")
+    def drop(self,item_number):
+        for counter, item in enumerate(self.inventory):
+            if item_number == counter:
+                self.inventory.remove(item)
+                self.get_inventory()
+            else:
+                print("Invalid Item Number")
+        
+    def get_item(self,choice):
+        for counter, item in enumerate(self.inventory):
+            if counter == choice:
+                return (item)
+            else:
+                print("Invalid Item")
+                return (False)
+
     def get_name(self):
         return(self.name)
     def set_inventory(self,item):
