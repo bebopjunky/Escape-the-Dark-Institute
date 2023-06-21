@@ -1,5 +1,23 @@
 from file_management.data import rooms
+from file_management.data import room_descriptions
 import random
+
+colours = ["aqua",
+           "black",
+           "blue", 
+           "fuchsia", 
+           "gray",
+            "green",
+            "lime",
+            "maroon",
+            "navy",
+            "olive",
+            "purple",
+            "red",
+            "silver",
+            "teal",
+            "white",
+            "yellow"]
 
 class room():
     def __init__ (self,player_count):
@@ -14,7 +32,7 @@ class room():
         self.room_energy = None
         self.room_explosive = None
 
-        self.setup(player_count)
+        #self.setup(player_count)
     # def __str__(self):
     #     return f"{self.room_name}"
 
@@ -39,6 +57,28 @@ class room():
             tmp = random.choice(stats)
             self.room_health.append(tmp)
 
+    def rnd_setup(self,player_count):
+            tmp = random.choice(rooms)
+            rooms.remove(tmp)
+            room = tmp.split(",")
+            
+            colour = random.choice(colours)
+            colours.remove(colour)
+            self.room_name = f"This is: The {colour} room."
+            room_description = random.choice(room_descriptions)
+            room_descriptions.remove(room_description)
+            self.room_desc = room_description
+            health = ["m","c","w"]
+            for i in range(0,player_count*self.room_level):
+                room_health = random.choice(health)
+                self.remove_room_health.append(room_health)            
+            self.room_rdamage = room[4]
+            self.room_cdamage = room[5]
+            self.room_reward = room[6]
+            self.room_ballistic = room[7]
+            self.room_energy = room[8]
+            self.room_explosive = room[9]
+
     def get_room_description(self):
         print("")
         print("*****************************************")
@@ -56,19 +96,14 @@ class room():
     
     def get_room_rdamage(self):
         return (self.room_rdamage)
-    
     def get_room_bdamage(self):
         return (self.room_ballistic)
-    
     def get_room_edamage(self):
         return (self.room_energy)
-
     def get_room_xdamage(self):
         return (self.room_explosive)                     
-
     def get_room_health(self):
         return(self.room_health)
-    
     def remove_room_health(self,roll,mod):        
         if roll in self.room_health:
             self.room_health.remove(roll)
@@ -76,6 +111,26 @@ class room():
                 self.room_health.remove(mod)
                 print("Mod Activated!")            
             print("Current Room Health:",self.room_health)
-            
-        
+
+class level_1(room):
+    def __init__(self,player_count):
+        super().__init__(player_count)
+        self.room_level = 1
+        self.setup(player_count)
+class level_2(room):
+    def __init__(self,player_count):
+        super().__init__(player_count)
+        self.room_level = 2
+        self.setup(player_count)
+class level_3(room):
+    def __init__(self,player_count):
+        super().__init__(player_count)
+        self.room_level = 3
+        self.setup(player_count)
+class Boss(room):
+    def __init__(self,player_count):
+        super().__init__(player_count)
+        self.room_level = 4
+        self.setup(player_count)        
+
 #create sub classes for the different room types. 
