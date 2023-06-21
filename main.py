@@ -5,15 +5,19 @@ from items import item
 
 #validate input
 
+def invalid():
+    print("")
+    print("*****************************************")
+    print("Invalid Action")
+    print("*****************************************")
+    print("")
 def validate(current_player,action):
-    actions = ["roll ranged","reload","roll melee","trade","heal","flank","stats"]
+    actions = ["roll ranged","reload","roll melee","trade","heal","flank","stats","room","drop"]
     if action == "player":
         for a in chapter:
             if current_player == a.get_name():
                 return current_player
-        print("*****************************************")
-        print("Invalid Choice")
-        print("*****************************************")
+        invalid()
         return False
     elif action == "stats":
         current_player.get_description()
@@ -34,67 +38,141 @@ def validate(current_player,action):
             heal(current_player)
         elif action == "flank":
             flank(current_player)
+        elif action == "room":
+            card.get_room_description()
+        elif action == "drop":
+            drop(current_player)
         return True
     else:
-        print("")
-        print("*****************************************")
-        print("Invalid Action")
-        print("*****************************************")
-        print("")
-        return False
-    
+        invalid()
+        return False  
 #Actions
 def roll_ranged(current_player):
     #Ranged Combat
+    print("")
+    print("*****************************************")
+    print("ACTION: ROLL RANGED")
     weapon = current_player.get_weapon()
     if weapon is not False:        
         ranged_dice = ["Hit","Hit","Miss"]
         choices = ["c","m","w"]        
         print("you are fighting with",weapon)
+        print("Ammo Type:",weapon.get_type())
         print("Ammo:",weapon.get_ammo())
+        #this will roll for the amount of ammo
         for i in range(0,int(weapon.get_ammo())): 
             valid = False
             roll = random.choice(ranged_dice)
             print("")
-            print("Your",+1,"roll")
+            print("Your",i+1,"ammo")
             print("You rolled a ",roll)
             if roll == "Hit":
                 if weapon.get_type() == "b":
-                    ammo = card.get_room_bdamage()
-                elif card.get_room_edamage():
-                    ammo = card.get_room_edamage()
+                    ammo_mod = card.get_room_bdamage()
+                elif card.get_room_edamage() == "e":
+                    ammo_mod = card.get_room_edamage()
                 else:
-                    ammo = card.get_room_xdamage()                
-                for i in range (0,(int(ammo))):
+                    ammo_mod = card.get_room_xdamage()
+                #this will apply the correct amount of damage to the room                    
+                for i in range (0,(int(ammo_mod))):
                     while valid is not True:
+                        print("")
                         print("How do you want to allocate the damage?")
                         print(choices)
+                        print("Current Room Health:",card.get_room_health())
                         choice = input()
                         if choice in choices:
-                            valid = True
-                            card.remove_room_health(choice,current_player.get_mod())                        
-                            current_player.remove_health(int(card.get_room_rdamage()))
+                            valid = True                                                 
+                            card.remove_room_health(choice,current_player.get_mod())   
                         else:
                             print("Invalid Choice") 
-                weapon.reduce_ammo()       
-
-                
+                        if len(card.get_room_health()) == 0:
+                            break
+                    valid = False
+        weapon.reduce_ammo()
+        if current_player.get_flank() != True:        
+            current_player.remove_health(int(card.get_room_rdamage()))        
 def roll_melee(current_player):
+        print("")
+        print("*****************************************")
+        print("ACTION: ROLL MELEE")
         roll = random.choice(current_player.dice)
         print("You rolled a ",roll)
         card.remove_room_health(roll,current_player.get_mod())
-        current_player.remove_health(int(card.get_room_rdamage()))
-
+        current_player.remove_health(int(card.get_room_cdamage()))
 def reload(current_player):
     weapon = current_player.get_weapon()
     weapon.reload()
-
+    print("")
+    print("*****************************************")
+    print("ACTION: RELOAD")
 def trade(current_player):
-    pass   
+    tmp_list = players.copy()
+    tmp_list.remove(current_player)
+    print("")
+    print("*****************************************")
+    print("ACTION: TRADE")
+    print("Available Players: ")
+    for tmp_player in tmp_list:
+        print(tmp_player)
+    print("Which player do you want to trade with?")
+    choice = input(": ")
+
+    for trade_player in tmp_list:
+        if choice == trade_player.get_name():
+            current_player.get_inventory()
+            trade_player.get_inventory() 
+            print("Which item number do you want to trade: ")  
+            choice = input(": ")
+            if choice == "x":
+                print("Cancel")
+                return()
+            trade_item = current_player.get_item(int(choice)-1)
+            if trade_item != False:
+                trade_player.set_inventory(trade_item)
+                return()
+    invalid()
 def heal(current_player):
-    pass
+    print("")
+    print("*****************************************")
+    print("ACTION: HEAL")
+    global heal_avaiable
+    if heal_avaiable == True:
+        current_player.heal()
+        heal_avaiable = False
+    else:
+        print("")
+        print("*****************************************")
+        print("Heal Unavailable")
+        print("*****************************************")
+        print("")
 def flank(current_player):
-    pass
+    print("")
+    print("*****************************************")
+    print("ACTION: FLANK")
+    global flank_available
+    if flank_available == True:
+        ranged_dice = ["Hit","Hit","Miss"]
+        roll = random.choice(ranged_dice)
+        if roll == "Hit":
+            print("You were hit while moving to flank")
+            current_player.remove_health(1)
+        current_player.flank()
+        flank_available = False
+    else:
+        print("")
+        print("*****************************************")
+        print("Flanking Unavailable")
+        print("*****************************************")
+        print("")
+def drop(current_player):
+    current_player.get_inventory()
+    print("Which item should you drop?")
+    choice = input(": ")
+    if choice == "x":
+                print("Cancel")
+                return()
+    current_player.drop(int(choice)-1)
 
 #Item Setup
 item_deck = [None]*10
@@ -102,7 +180,9 @@ for i in range(0,len(item_deck)):
     item_deck[i] = item()
 
 #Player Setup
+print("")
 print("Escape The Dark Institution")
+print("")
 #validation of player_count
 player_count = ""
 while not(isinstance(player_count,int)):
@@ -114,7 +194,7 @@ while not(isinstance(player_count,int)):
 players = [None]*player_count
 for counter,tmp in enumerate(players):
     print("")
-    print("Player",i+1)
+    print("Player",counter+1)
     print("Name your character")
     choice = input(": ")
     players[counter] = player(choice)
@@ -133,6 +213,8 @@ for card in room_deck:
     card.get_room_description()
     chapter = players.copy()
     ranged_combat = True
+    heal_avaiable = True
+    flank_available = True
     for character in chapter:
         character.reload()
 #Runs until the card is beat
@@ -155,7 +237,7 @@ for card in room_deck:
             valid = False
             while valid is not True:
                 print("Available Actions")
-                print("roll ranged","¦","roll melee","¦","trade","¦","heal","¦","flank","¦","stats")
+                print("roll ranged","¦","roll melee","¦","trade","¦","heal","¦","flank","¦","stats","¦","reload","¦","trade","¦","drop")
                 print("")                   
                 print("What action will you take?")
                 valid = validate(current_player,input(": "))
@@ -163,4 +245,5 @@ for card in room_deck:
     print("")
     print("ROOM COMPLETED")
     print("")
+print("YOU WIN!")
     

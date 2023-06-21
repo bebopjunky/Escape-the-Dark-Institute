@@ -12,7 +12,8 @@ class player():
         self.mod_att = None
         self.mod_desc = None
         self.inventory = []
-        self.inventory_weight = 0        
+        self.inventory_weight = 0
+        self.flanking = False
         self.set_character(name)
         self.set_mod()
 
@@ -51,6 +52,34 @@ class player():
             item.get_description()
         print("*****************************************")
         print("")
+    def get_inventory(self):
+        print("")
+        print("*****************************************")
+        print(self.title)
+        print("Available Space ",self.inventory_weight)
+        print("You are Carrying: ")
+        if len(self.inventory) == 0:
+            print("NOTHING")
+        else: 
+            for counter, item in enumerate(self.inventory):
+                print("Item number: ",counter+1)
+                item.get_description()
+        print("*****************************************")
+        print("")
+    def drop(self,item_number):
+        for counter, item in enumerate(self.inventory):
+            if item_number == counter:
+                self.inventory.remove(item)
+                self.get_inventory()
+            else:
+                print("Invalid Item Number")    
+    def get_item(self,choice):
+        for counter, item in enumerate(self.inventory):
+            if counter == choice:
+                return (item)
+            else:
+                print("Invalid Item")
+                return (False)
     def get_name(self):
         return(self.name)
     def set_inventory(self,item):
@@ -69,15 +98,27 @@ class player():
                 print("")
                 print("Out of ammo")
                 print("")
-                return False
-            
+                return False          
     def remove_health(self,damage):
         #damage = int(damage)
         self.health = self.health - damage
         print("Player Health:",self.health)
         print("")
-
     def reload(self):
         for weapon in self.inventory:
             if int(weapon.item_ammo) == 0:
                 weapon.reload()
+    def heal(self):
+        if self.health == 12:
+            print("You are at full health")
+        else:
+            self.health += 1
+            print("You have been healed")
+            print("Health: ",self.health)
+    def flank(self):
+        if self.flanking == False:
+            self.flanking = True
+        else:
+            self.flanking = False
+    def get_flank(self):
+        return self.flanking
