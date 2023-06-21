@@ -89,8 +89,9 @@ def roll_ranged(current_player):
                         if len(card.get_room_health()) == 0:
                             break
                     valid = False
-        weapon.reduce_ammo()        
-        current_player.remove_health(int(card.get_room_rdamage()))        
+        weapon.reduce_ammo()
+        if current_player.get_flank() != True:        
+            current_player.remove_health(int(card.get_room_rdamage()))        
 def roll_melee(current_player):
         print("")
         print("*****************************************")
@@ -135,11 +136,35 @@ def heal(current_player):
     print("")
     print("*****************************************")
     print("ACTION: HEAL")
-    current_player.heal()
+    global heal_avaiable
+    if heal_avaiable == True:
+        current_player.heal()
+        heal_avaiable = False
+    else:
+        print("")
+        print("*****************************************")
+        print("Heal Unavailable")
+        print("*****************************************")
+        print("")
 def flank(current_player):
     print("")
     print("*****************************************")
     print("ACTION: FLANK")
+    global flank_available
+    if flank_available == True:
+        ranged_dice = ["Hit","Hit","Miss"]
+        roll = random.choice(ranged_dice)
+        if roll == "Hit":
+            print("You were hit while moving to flank")
+            current_player.remove_health(1)
+        current_player.flank()
+        flank_available = False
+    else:
+        print("")
+        print("*****************************************")
+        print("Flanking Unavailable")
+        print("*****************************************")
+        print("")
 def drop(current_player):
     current_player.get_inventory()
     print("Which item should you drop?")
@@ -155,7 +180,9 @@ for i in range(0,len(item_deck)):
     item_deck[i] = item()
 
 #Player Setup
+print("")
 print("Escape The Dark Institution")
+print("")
 #validation of player_count
 player_count = ""
 while not(isinstance(player_count,int)):

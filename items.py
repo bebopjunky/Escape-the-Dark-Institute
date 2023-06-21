@@ -25,8 +25,7 @@ class item():
         self.item_weight = item[2].strip()
         self.item_type = item[3].strip()
         self.item_ammo = item[4].strip()
-        self.item_ammo_full = item[4].strip()
-    
+        self.item_ammo_full = item[4].strip()   
     def get_description(self):
         print("*****************************************")
         print("Item Name: ",self.item_name)
@@ -38,21 +37,17 @@ class item():
             print("It fires energy ammo and contains",self.item_ammo,"shots")
         else:
             print("It fires explosive ammo and contains",self.item_ammo,"shots")
-        print("*****************************************")
-    
+        print("*****************************************")  
     def get_ammo(self):
-        return(self.item_ammo)
-    
+        return(self.item_ammo)   
     def get_type(self):
         if self.item_type == "b":
             return ("ballistic")
         elif self.item_type == "e":
             return ("energy")
         else:
-            return ("explosive")      
-    
+            return ("explosive") 
     def reduce_ammo(self):
-        self.item_ammo = 0
-    
+        self.item_ammo = 0   
     def reload(self):
         self.item_ammo = self.item_ammo_full
