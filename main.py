@@ -1,6 +1,6 @@
 import random
 from player import player
-from room import room
+from room import *
 from items import item
 
 #validate input
@@ -202,10 +202,18 @@ for counter,tmp in enumerate(players):
     players[counter].get_description()
 
 #Room Setup
-room_deck = [None]*2
-for counter, tmp in enumerate(room_deck):
-    room_deck[counter] = room(player_count)
+# room_deck = [None]*(2*player_count)
+# for counter, tmp in enumerate(room_deck):
+#     room_deck[counter] = room(player_count)
 
+room_deck = []
+for i in range(0,3):
+    room_deck.append(level_1(player_count))
+for i in range(0,3):
+    room_deck.append(level_2(player_count))
+for i in range(0,3):
+    room_deck.append(level_3(player_count))    
+room_deck.append(boss(player_count))   
 #Main Game
 
 #Moves through each card in the deck
