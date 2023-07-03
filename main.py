@@ -1,7 +1,7 @@
 import random
 from player import player
 from room import *
-from items import item
+from items import *
 
 #validate input
 
@@ -177,7 +177,7 @@ def drop(current_player):
 #Item Setup
 item_deck = [None]*10
 for i in range(0,len(item_deck)):
-    item_deck[i] = item()
+    item_deck[i] = weapon()
 
 #Player Setup
 print("")

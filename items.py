@@ -10,11 +10,9 @@ class item():
         self.item_ammo = None
         self.item_ammo_full = None
 
-        self.setup()
-
     def __str__(self):
         return f"{self.item_name}"
-    
+   
     def setup(self):
         tmp = random.choice(items)
         items.remove(tmp)
@@ -51,3 +49,15 @@ class item():
         self.item_ammo = 0   
     def reload(self):
         self.item_ammo = self.item_ammo_full
+
+class weapon(item):
+    def __init__(self):
+        super().__init__()
+        self.setup()
+
+class reward(item):
+    def __init__(self):
+        super().__init__()
+        self.setup()
+    def reward_setup(self):
+        

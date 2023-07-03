@@ -1,0 +1,38 @@
+Holo-watch,A wrist-mounted device that projects a holographic display,1,False,H
+Personal jetpack,A device that allows the user to fly,2,False,W
+Translator,A device that can translate any language,1,False,H
+Proximity alarm,A device that emits a loud noise when it comes within a certain distance of an object,1,False,C
+Solar charger,A device that converts sunlight into energy,1,False,H
+Gravity gun,A device that can manipulate gravity,3,True,W
+Time machine,A device that allows the user to travel through time,3,True,W
+Force field generator,A device that creates a protective barrier,2,True,W
+Teleporter,A device that allows the user to teleport to another location,3,True,W
+Invisibility cloak,A device that makes the user invisible,2,True,W
+Mind control helmet,A device that allows the user to control the minds of others,3,True,W
+Nanobots,Tiny robots that can repair or destroy objects,1,False,H
+Matter replicator,A device that can create objects out of thin air,3,True,W
+Antimatter bomb,A bomb that releases an enormous amount of energy when it detonates,3,True,W
+Universal translator,A device that can translate any language,1,False,H
+Personal shield,A device that protects the user from harm,2,True,W
+Jetpack backpack,A device that allows the user to fly,3,True,W
+Space suit,A suit that protects the user from the harsh environment of space,2,False,W
+Medical scanner,A device that can scan the body for injuries or diseases,1,False,H
+Life support system,A device that provides the user with oxygen and other essential gases,2,True,W
+Oxygen tank,A tank that contains oxygen,1,False,H
+Flashlight,A device that emits a beam of light,1,False,H
+Multitool,A tool that can perform a variety of tasks,1,False,H
+Compass,A device that indicates the direction of north,1,False,H
+Map,A map of a particular area,1,False,H
+Water bottle,A bottle that contains water,1,False,H
+Food ration,A packaged meal that provides sustenance,1,False,H
+Sleeping bag,A bag that is used for sleeping,1,False,H
+Tent,A shelter that is used for sleeping outdoors,2,False,H
+First aid kit,A kit that contains medical supplies,1,False,H
+Fire extinguisher,A device that extinguishes fires,1,False,H
+Tool kit,A kit that contains tools,1,False,H
+Repair kit,A kit that contains materials and tools for repairing objects,1,False,H
+Survival knife,A knife that is used for survival purposes,1,False,H
+Binoculars,A device that allows the user to see distant objects,1,False,H
+Wrist communicator,A device that allows the user to communicate with others,1,False,H
+Datapad,A handheld device that stores data,1,False,H
+Hologram projector,A device that projects holograms,1,False,H
