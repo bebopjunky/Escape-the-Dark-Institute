@@ -1,4 +1,4 @@
-from file_management.data import items
+from file_management.data import items,rewards
 import random
 
 class item():
@@ -10,11 +10,9 @@ class item():
         self.item_ammo = None
         self.item_ammo_full = None
 
-        self.setup()
-
     def __str__(self):
         return f"{self.item_name}"
-    
+   
     def setup(self):
         tmp = random.choice(items)
         items.remove(tmp)
@@ -51,3 +49,24 @@ class item():
         self.item_ammo = 0   
     def reload(self):
         self.item_ammo = self.item_ammo_full
+
+class weapon(item):
+    def __init__(self):
+        super().__init__()
+        self.setup()
+
+class reward(item):
+    def __init__(self):
+        super().__init__()
+        self.item_mod = None
+        self.item_disposable = None
+        self.reward_setup()
+    def reward_setup(self):
+        tmp = random.choice(rewards)
+        rewards.remove(tmp)
+        card = tmp.split(",")
+        self.item_name = card[0].strip()
+        self.item_desc = card[1].strip()
+        self.item_weight = card[2].strip()
+        self.item_disposable = card[3].strip()
+        self.item_mod = card[4].strip()
